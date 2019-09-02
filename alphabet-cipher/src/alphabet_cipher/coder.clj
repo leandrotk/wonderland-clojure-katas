@@ -18,9 +18,14 @@
     value))
 
 (defn encode-letter [letter-1 letter-2]
-  (char
-   (fix-mod-boundary
-    (mod (+ (mod (int letter-2) 97) (int letter-1)) 123))))
+  (let [int-letter-1 (int letter-1)
+        int-letter-2 (int letter-2)]
+    (-> int-letter-2
+        (mod 97)
+        (+ int-letter-1)
+        (mod 123)
+        fix-mod-boundary
+        char)))
 
 (defn loop-through-two-strings [string-1 string-2 encode-letter]
   (loop [string-list-1 (seq string-1)
