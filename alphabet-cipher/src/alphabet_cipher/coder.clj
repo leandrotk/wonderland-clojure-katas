@@ -12,17 +12,17 @@
    (empty? string-list-1)
    (empty? string-list-2)))
 
-(defn do-other-thing [value]
+(defn fix-mod-boundary [value]
   (if (< value 25)
     (+ value 97)
     value))
 
-(defn do-something [letter-1 letter-2]
+(defn encode-letter [letter-1 letter-2]
   (char
-   (do-other-thing
+   (fix-mod-boundary
     (mod (+ (mod (int letter-2) 97) (int letter-1)) 123))))
 
-(defn loop-through-two-strings [string-1 string-2]
+(defn loop-through-two-strings [string-1 string-2 encode-letter]
   (loop [string-list-1 (seq string-1)
          string-list-2 (seq string-2)
          result        ""]
@@ -31,7 +31,7 @@
       (do
         (let [letter-1 (first string-list-1)
               letter-2 (first string-list-2)
-              generated-letter (do-something letter-1 letter-2)]
+              generated-letter (encode-letter letter-1 letter-2)]
           (recur
            (rest string-list-1)
            (rest string-list-2)
@@ -40,7 +40,7 @@
 (defn encode [keyword message]
   (-> keyword
       (repeat-keyword message)
-      (loop-through-two-strings message)))
+      (loop-through-two-strings message encode-letter)))
 
 (defn decode [keyword message]
   "decodeme")
