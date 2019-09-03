@@ -38,7 +38,7 @@
         fix-mod-boundary
         char)))
 
-(defn loop-through-two-strings [string-1 string-2 encode-letter]
+(defn transform [string-1 string-2 transform-letter]
   (loop [string-list-1 (seq string-1)
          string-list-2 (seq string-2)
          result        ""]
@@ -47,7 +47,7 @@
       (do
         (let [letter-1 (first string-list-1)
               letter-2 (first string-list-2)
-              generated-letter (encode-letter letter-1 letter-2)]
+              generated-letter (transform-letter letter-1 letter-2)]
           (recur
            (rest string-list-1)
            (rest string-list-2)
@@ -56,12 +56,12 @@
 (defn encode [keyword message]
   (-> keyword
       (repeat-keyword message)
-      (loop-through-two-strings message encode-letter)))
+      (transform message encode-letter)))
 
 (defn decode [keyword message]
   (-> keyword
       (repeat-keyword message)
-      (loop-through-two-strings message decode-letter)))
+      (transform message decode-letter)))
 
 (defn decipher [cipher message]
   "decypherme")
