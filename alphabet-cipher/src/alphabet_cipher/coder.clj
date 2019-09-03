@@ -27,6 +27,17 @@
         fix-mod-boundary
         char)))
 
+(defn decode-letter [letter-1 letter-2]
+  (let [int-letter-1 (int letter-1)
+        int-letter-2 (int letter-2)
+        mod-123      (mod 123 int-letter-1)]
+    (-> int-letter-2
+        (- 97)
+        (+ 97 mod-123)
+        (mod 123)
+        fix-mod-boundary
+        char)))
+
 (defn loop-through-two-strings [string-1 string-2 encode-letter]
   (loop [string-list-1 (seq string-1)
          string-list-2 (seq string-2)
@@ -48,7 +59,9 @@
       (loop-through-two-strings message encode-letter)))
 
 (defn decode [keyword message]
-  "decodeme")
+  (-> keyword
+      (repeat-keyword message)
+      (loop-through-two-strings message decode-letter)))
 
 (defn decipher [cipher message]
   "decypherme")
