@@ -38,6 +38,14 @@
         fix-mod-boundary
         char)))
 
+(defn decypher-letter [letter-1 letter-2]
+	(char
+    (let [int-letter-1 (int letter-1)
+          int-letter-2 (int letter-2)]		
+      (if (> int-letter-1 int-letter-2)
+        (+ 97 (- int-letter-2 97) (- 122 int-letter-1))
+        (- int-letter-2 int-letter-1)))))
+
 (defn transform [string-1 string-2 transform-letter]
   (loop [string-list-1 (seq string-1)
          string-list-2 (seq string-2)
@@ -64,4 +72,6 @@
       (transform message decode-letter)))
 
 (defn decipher [cipher message]
-  "decypherme")
+  (-> keyword
+      (repeat-keyword message)
+      (transform message decypher-letter)))
