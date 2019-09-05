@@ -38,13 +38,27 @@
         fix-mod-boundary
         char)))
 
-(defn decypher-letter [letter-1 letter-2]
-	(char
-    (let [int-letter-1 (int letter-1)
-          int-letter-2 (int letter-2)]		
-      (if (> int-letter-1 int-letter-2)
-        (+ 97 (- int-letter-2 97) (- 122 int-letter-1))
-        (- int-letter-2 int-letter-1)))))
+(defn decipher-letter [letter-1 letter-2]
+  (let [int-letter-1 (int letter-1)
+        int-letter-2 (int letter-2)]
+    (if (> int-letter-2 int-letter-1)
+      (char (+ 97 (- int-letter-1 97) (- 123 int-letter-2)))
+      (char (+ 97 (- int-letter-1 int-letter-2))))))
+
+(defn repeats? [pattern input]
+  (empty?
+   (filter
+    #(not (every? identity (map = pattern %)))
+    (partition-all (count pattern) input))))
+
+(defn extract [value]
+  (loop [output (str (first value))
+         r      (rest value)]
+    (if (or (empty? r) (repeats? output r))
+      output
+      (recur
+       (str output (first r))
+       (rest r)))))
 
 (defn transform [string-1 string-2 transform-letter]
   (loop [string-list-1 (seq string-1)
@@ -72,6 +86,6 @@
       (transform message decode-letter)))
 
 (defn decipher [cipher message]
-  (-> keyword
-      (repeat-keyword message)
-      (transform message decypher-letter)))
+  (-> cipher
+      (transform message decipher-letter)
+      extract))

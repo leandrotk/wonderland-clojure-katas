@@ -31,3 +31,9 @@
            (decipher "hcqxqqtqljmlzhwiivgbsapaiwcenmyu" "packmyboxwithfivedozenliquorjugs")))
     (is (= "abcabcx"
            (decipher "hfnlphoontutufa" "hellofromrussia")))))
+
+(deftest test-decipher-letter
+  (testing "decipher the letter"
+    (is (= \v (decipher-letter \o \t)))
+    (is (= \i (decipher-letter \p \h)))
+    (is (= \g (decipher-letter \k \e)))))
