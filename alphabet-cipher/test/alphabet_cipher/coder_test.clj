@@ -2,6 +2,13 @@
   (:require [clojure.test :refer :all]
             [alphabet-cipher.coder :refer :all]))
 
+(deftest test-repeat-keyword
+  (testing "repeat keyword to have the same length as the message"
+    (is (= "vigilancevigilancevigilancevi"
+           (repeat-keyword "vigilance" "meetmeontuesdayeveningatseven")))
+    (is (= "vigilancevigila"
+           (repeat-keyword "vigilancevigila" "meetmebythetree")))))
+
 (deftest test-encode
   (testing "can encode a message with a secret keyword"
     (is (= "hmkbxebpxpmyllyrxiiqtoltfgzzv"
@@ -24,3 +31,9 @@
            (decipher "hcqxqqtqljmlzhwiivgbsapaiwcenmyu" "packmyboxwithfivedozenliquorjugs")))
     (is (= "abcabcx"
            (decipher "hfnlphoontutufa" "hellofromrussia")))))
+
+(deftest test-decipher-letter
+  (testing "decipher the letter"
+    (is (= \v (decipher-letter \o \t)))
+    (is (= \i (decipher-letter \p \h)))
+    (is (= \g (decipher-letter \k \e)))))
