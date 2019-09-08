@@ -2,7 +2,6 @@
   (:require [clojure.test :refer :all]
             [card-game-war.game :refer :all]))
 
-
 ;; fill in  tests for your game
 (deftest test-play-round
   (testing "the highest rank wins the cards in the round"
